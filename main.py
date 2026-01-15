@@ -1,5 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pytgcalls import PyTgCalls
 from config import *
 
 app = Client(
@@ -9,25 +10,26 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
+# Music Player Client (PyTgCalls)
+call_py = PyTgCalls(app)
+
 @app.on_message(filters.command("start"))
 async def start(client, message):
-    # Bot ka username auto-fetch karne ke liye
-    bot_username = (await client.get_me()).username
-    bot_name = (await client.get_me()).first_name
-
-    # Stylish Caption (Advika Style)
+    bot = await client.get_me()
+    
+    # Stylish Caption (As per your Screenshot)
     caption = (
         f"нᴇʏ {message.from_user.mention}, 🥀\n\n"
-        f"☉ тнιѕ ιѕ ⌜ {bot_name} ⌟ !\n\n"
+        f"☉ тнιѕ ιѕ ⌜ {bot.first_name} ⌟ !\n\n"
         f"➻ ᴀ ғᴀsт & ᴘᴏᴡᴇʀғᴜʟ тᴇʟᴇɢʀᴀᴍ мᴜsɪᴄ ᴘʟᴀʏᴇʀ ʙᴏт ᴡɪтн sᴏᴍᴇ ᴀᴡᴇsᴏᴍᴇ ғᴇᴀтᴜʀᴇs.\n\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━\n"
         f"<u>sᴜᴘᴘᴏʀтᴇᴅ ᴘʟᴀтғᴏʀмs :</u> ʏᴏᴜтᴜʙᴇ, sᴘᴏтɪғʏ, ʀᴇssᴏ, ᴀᴘᴘʟᴇ мᴜsɪᴄ ᴀɴᴅ sᴏᴜɴᴅᴄʟᴏᴜᴅ.\n\n"
         f"☉ ᴄʟɪᴄᴋ ᴏɴ тнᴇ нᴇʟᴘ ʙᴜттᴏɴ тᴏ ɢᴇт ιɴғᴏʀмᴀтɪᴏɴ ᴀʙᴏᴜт мʏ мᴏᴅᴜʟᴇs ᴀɴᴅ ᴄᴏммᴀɴᴅs."
     )
 
-    # Buttons Layout (1-1-2-1 Pattern)
+    # Buttons Layout (1-1-2-1)
     buttons = InlineKeyboardMarkup([
-        [InlineKeyboardButton("✚ ᴀᴅᴅ мᴇ ιɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ✚", url=f"https://t.me/{bot_username}?startgroup=true")],
+        [InlineKeyboardButton("✚ ᴀᴅᴅ мᴇ ιɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ✚", url=f"https://t.me/{bot.username}?startgroup=true")],
         [InlineKeyboardButton("нᴇʟᴘ & ᴄᴏммᴀɴᴅs", callback_data="help_menu")],
         [
             InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", url=f"tg://user?id={OWNER_ID}"),
@@ -42,5 +44,5 @@ async def start(client, message):
         reply_markup=buttons
     )
 
-print("Vina Music Bot Starting...")
+print("Bot is starting...")
 app.run()
