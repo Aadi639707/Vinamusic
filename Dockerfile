@@ -1,6 +1,5 @@
 FROM python:3.10-slim-bookworm
 
-# System updates aur FFmpeg install karne ke liye
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y ffmpeg && \
     rm -rf /var/lib/apt/lists/*
