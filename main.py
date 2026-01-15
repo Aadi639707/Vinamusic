@@ -2,28 +2,36 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from config import *
 
-app = Client(
-    "MusicBot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=BOT_TOKEN
-)
+app = Client("MyMusicBot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
-@app.on_message(filters.command("start") & filters.private)
-async def start_msg(client, message):
-    await message.reply_photo(
-        photo=START_IMG,
-        caption=f"Hi {message.from_user.mention}!\n\nI am a Super Fast Music Bot. Add me to your group to enjoy high quality music! 🎶",
-        reply_markup=InlineKeyboardMarkup([
-            [
-                InlineKeyboardButton("➕ Add to Group", url=f"https://t.me/{client.me.username}?startgroup=true"),
-            ],
-            [
-                InlineKeyboardButton("🛠 Support", url="https://t.me/your_support_chat"),
-                InlineKeyboardButton("Updates 📢", url="https://t.me/your_channel")
-            ]
-        ])
+@app.on_message(filters.command("start"))
+async def start(client, message):
+    # Stylish Text for Caption
+    caption = (
+        f"нᴇʏ {message.from_user.mention}, 🥀\n\n"
+        f"☉ тнιѕ ιѕ ⌜ {BOT_NAME} ⌟ !\n\n"
+        f"➻ ᴀ ғᴀsт & ᴘᴏᴡᴇʀғᴜʟ тᴇʟᴇɢʀᴀᴍ мᴜsɪᴄ ᴘʟᴀʏᴇʀ ʙᴏт ᴡɪтн sᴏᴍᴇ ᴀᴡᴇsᴏᴍᴇ ғᴇᴀтᴜʀᴇs.\n\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"<u>sᴜᴘᴘᴏʀтᴇᴅ ᴘʟᴀтғᴏʀᴍs :</u> ʏᴏᴜтᴜʙᴇ, sᴘᴏтɪғʏ, ʀᴇssᴏ, ᴀᴘᴘʟᴇ мᴜsɪᴄ ᴀɴᴅ sᴏᴜɴᴅᴄʟᴏᴜᴅ.\n\n"
+        f"☉ ᴄʟɪᴄᴋ ᴏɴ тнᴇ нᴇʟᴘ ʙᴜттᴏɴ тᴏ ɢᴇт ιɴғᴏʀмᴀтɪᴏɴ ᴀʙᴏᴜт мʏ мᴏᴅᴜʟᴇs ᴀɴᴅ ᴄᴏммᴀɴᴅs."
     )
 
-print("Bot is Starting...")
+    # Buttons Arrangement as per Screenshot
+    buttons = InlineKeyboardMarkup([
+        [InlineKeyboardButton("✚ ᴀᴅᴅ мᴇ ιɴ ʏᴏᴜʀ ɢʀᴏᴜᴘ ✚", url=f"https://t.me/{client.me.username}?startgroup=true")],
+        [InlineKeyboardButton("нᴇʟᴘ & ᴄᴏммᴀɴᴅs", callback_data="help_menu")],
+        [
+            InlineKeyboardButton("ᴅᴇᴠᴇʟᴏᴘᴇʀ", url=f"https://t.me/{DEV_USER}"),
+            InlineKeyboardButton("sᴜᴘᴘᴏʀт", url=SUPPORT_CHAT)
+        ],
+        [InlineKeyboardButton("ᴄнᴀɴɴᴇʟ", url=UPDATE_CHANNEL)]
+    ])
+
+    await message.reply_photo(
+        photo=START_IMG,
+        caption=caption,
+        reply_markup=buttons
+    )
+
+print("Bot is Live!")
 app.run()
