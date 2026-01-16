@@ -2,10 +2,9 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pytgcalls import PyTgCalls
-from pytgcalls.types import MediaStream
 from config import *
 
-# Initialize the Bot Client
+# Initialize Bot
 app = Client(
     "VinaMusicBot",
     api_id=API_ID,
@@ -13,44 +12,32 @@ app = Client(
     bot_token=BOT_TOKEN
 )
 
-# Initialize the Call Client (Userbot Assistant)
+# Initialize Call Client
 call_py = PyTgCalls(app)
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
-    # Fetching Bot Info dynamically
-    bot_info = await client.get_me()
-    bot_name = bot_info.first_name
-    bot_username = bot_info.username
-
-    # English Caption (Professional Layout)
+    bot = await client.get_me()
+    
+    # English Professional Caption
     caption = (
         f"Hello {message.from_user.mention}, 🥀\n\n"
-        f"☉ THIS IS ⌜ {bot_name} ⌟ !\n\n"
+        f"☉ THIS IS ⌜ {bot.first_name} ⌟ !\n\n"
         f"➻ A FAST & POWERFUL TELEGRAM MUSIC PLAYER BOT WITH SOME AWESOME FEATURES.\n\n"
         f"━━━━━━━━━━━━━━━━━━━━━━━━\n"
-        f"<u>SUPPORTED PLATFORMS :</u> YOUTUBE, SPOTIFY, RESSO, APPLE MUSIC AND SOUNDCLOUD.\n\n"
-        f"☉ CLICK ON THE HELP BUTTON TO GET INFORMATION ABOUT MY MODULES AND COMMANDS."
+        f"<u>SUPPORTED PLATFORMS:</u> YOUTUBE, SPOTIFY, APPLE MUSIC, AND MORE.\n\n"
+        f"☉ CLICK THE BUTTONS BELOW TO EXPLORE MY COMMANDS."
     )
 
-    # Buttons Layout (1-1-2-1)
+    # Professional Buttons Layout
     buttons = InlineKeyboardMarkup([
-        [
-            InlineKeyboardButton(
-                "✚ ADD ME TO YOUR GROUP ✚", 
-                url=f"https://t.me/{bot_username}?startgroup=true"
-            )
-        ],
-        [
-            InlineKeyboardButton("HELP & COMMANDS", callback_data="help_menu")
-        ],
+        [InlineKeyboardButton("✚ ADD ME TO YOUR GROUP ✚", url=f"https://t.me/{bot.username}?startgroup=true")],
+        [InlineKeyboardButton("HELP & COMMANDS", callback_data="help_menu")],
         [
             InlineKeyboardButton("DEVELOPER", url=f"tg://user?id={OWNER_ID}"),
             InlineKeyboardButton("SUPPORT", url=SUPPORT_CHAT)
         ],
-        [
-            InlineKeyboardButton("CHANNEL", url=UPDATE_CHANNEL)
-        ]
+        [InlineKeyboardButton("CHANNEL", url=UPDATE_CHANNEL)]
     ])
 
     await message.reply_photo(
@@ -63,7 +50,7 @@ async def main():
     await app.start()
     await call_py.start()
     print("--------------------------")
-    print("Vina Music Bot is Online!")
+    print("Vina Music Bot is now Live!")
     print("--------------------------")
     await asyncio.Event().wait()
 
