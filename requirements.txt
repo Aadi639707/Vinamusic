@@ -2,5 +2,3 @@ pyrogram
 tgcrypto
 yt-dlp
 motor
-ffmpeg-python
-https://github.com/pytgcalls/pytgcalls/archive/master.tar.gz
