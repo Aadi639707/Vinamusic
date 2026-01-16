@@ -1,6 +1,5 @@
 pyrogram
-pytgcalls
 tgcrypto
+pytgcalls
 yt-dlp
-ffmpeg-python
 motor
